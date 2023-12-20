@@ -8,7 +8,7 @@ const {
 } = require("../Controllers/productController");
 const { upload } = require("../middleware/productUpload");
 
-router.post("/", upload.array("image",5), createProduct);
+router.post("/", upload.array("files",5), createProduct);
 router.get("/", getAllProduct);
 router.get("/:id", getProductById);
 router.delete("/:id", deleteProduct);

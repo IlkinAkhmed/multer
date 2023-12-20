@@ -3,8 +3,22 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const productSchema = new Schema(
   {
-    name: { type: String },
-    image: [String],
+    title: {
+      type: String,
+      required: true,
+    },
+    filename: {
+      type: String,
+      required: true,
+    },
+    originalName: {
+      type: String,
+      required: true,
+    },
+    filePath: {
+      type: String,
+      required: true,
+    }
   },
   { timestamps: true }
 );

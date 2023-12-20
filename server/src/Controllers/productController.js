@@ -2,21 +2,26 @@ const Products = require("../Models/productModel");
 
 exports.createProduct = async (req, res) => {
   try {
-    const files =req.files;
-    files.forEach((x) => {
-        const imagePath = ``
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ error: 'No files were uploaded' });
+    }
 
-    })
-    const newProduct = new Products({
-      name: req.body.name,
-      image: files,
+    const fileData = req.files.map((file) => {
+      return {
+        title: req.body.title,
+        filename: file.filename,
+        originalName: file.originalname,
+        filePath: file.path
+      };
     });
-    await newProduct.save();
-    res.status(201).send("Product Created");
-  } catch (error) {
-    res.status(500).send("Internal server Error!!!");
+
+    const savedFiles = await File.create(fileData);
+    res.status(200).json({ message: 'Files uploaded and saved to database', files: savedFiles });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to upload and save files' });
   }
-};
+}
 
 exports.getAllProduct = async (req, res) => {
   try {
